@@ -17,3 +17,7 @@ CollectionReference<Map<String, dynamic>> certs = firestore.collection('Certs');
 CollectionReference<Map<String, dynamic>> users = firestore.collection('Users');
 CollectionReference<Map<String, dynamic>> assessments = firestore.collection('Assessments');
 CollectionReference<Map<String, dynamic>> announcements = firestore.collection('Announcements');
+
+CollectionReference<Map<String, dynamic>> getAssesmentCollection(String uid) {
+  return firestore.collection('Users/$uid/Assessments');
+}

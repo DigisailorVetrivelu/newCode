@@ -25,8 +25,8 @@ class Profile {
     this.imageUrl,
     required this.department,
     required this.passportNumber,
-    this.isLocal = true,
     this.countryCode,
+    required this.userType,
   });
 
   String id;
@@ -40,7 +40,7 @@ class Profile {
   String? imageUrl;
   String? countryCode;
   String? phoneNumber;
-  bool isLocal;
+  UserType userType;
 
   static Future<dynamic> uploadPhoto() async {
     String? url;
@@ -60,19 +60,18 @@ class Profile {
   }
 
   factory Profile.fromJson(Map<String, dynamic> json) => Profile(
-        id: json["id"],
-        email: json["email"],
-        name: json["name"],
-        houseAddress: json["permanentAddress"],
-        residenceAddress: json["currentAddress"],
-        icNumber: json["icNumber"],
-        phoneNumber: json["phoneNumber"],
-        imageUrl: json["imageUrl"],
-        passportNumber: json["passportNumber"] ?? '',
-        department: json["department"] ?? '',
-        isLocal: json["isLocal"] ?? true,
-        countryCode: json["countryCode"] ?? '',
-      );
+      id: json["id"],
+      email: json["email"],
+      name: json["name"],
+      houseAddress: json["permanentAddress"],
+      residenceAddress: json["currentAddress"],
+      icNumber: json["icNumber"],
+      phoneNumber: json["phoneNumber"],
+      imageUrl: json["imageUrl"],
+      passportNumber: json["passportNumber"] ?? '',
+      department: json["department"] ?? '',
+      countryCode: json["countryCode"] ?? '',
+      userType: json["userType"]);
 
   Map<String, dynamic> toJson() => {
         "id": id,
@@ -85,7 +84,6 @@ class Profile {
         "imageUrl": imageUrl,
         "department": department,
         "passportNumber": passportNumber,
-        "local": isLocal,
         "countryCode": countryCode,
       };
 }
@@ -118,6 +116,7 @@ class UserModel {
   bool isStaff;
   Device? device;
   Quarantine? quarantine;
+  List<Quarantine>? quarantineHistory;
   CovidInfo? covidInfo;
   List<CovidInfo>? covidInfohistory;
   List<ContactHistory>? contactHistory;
@@ -531,3 +530,5 @@ class ContactHistory {
     ];
   }
 }
+
+enum UserType { localStudent, internationalStudent, staff }

@@ -40,18 +40,6 @@ class Announcement {
             });
           });
         });
-
-        // return announcements.add({
-        //   "attachementUrl": attachementUrl,
-        //   "title": title,
-        //   "description": "description",
-        //   "content": content,
-        //   "createdDate": DateTime.now(),
-        // }).then((docRef) async {
-        //   return storage.ref("announcements").child(docRef.id).putFile(file).whenComplete(() {
-        //     return {"code": "Success", "message": "Complaint Successfully Created"};
-        //   });
-        // });
       } catch (e) {
         return {"code": "Failure", "message": "Complaint not created"};
       }

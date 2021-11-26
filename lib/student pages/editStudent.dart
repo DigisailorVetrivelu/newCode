@@ -44,8 +44,6 @@ class _EditStudentState extends State<EditStudent> {
     phoneNumberController.text = widget.student.bioData.phoneNumber ?? '';
     deviceIDController.text = widget.student.device != null ? widget.student.device!.deviceId.toString() : '';
     groupIDController.text = widget.student.device != null ? widget.student.device!.groupId.toString() : '';
-    isStaff = widget.student.isStaff;
-    isLocal = widget.student.bioData.isLocal;
   }
 
   bool isStaff = false;
