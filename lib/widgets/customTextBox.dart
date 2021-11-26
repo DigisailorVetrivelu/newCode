@@ -80,6 +80,83 @@ class CustomTextBox extends StatelessWidget {
   }
 }
 
+class CustomDropDown extends StatelessWidget {
+  const CustomDropDown({
+    Key? key,
+    required this.labelText,
+    required this.hintText,
+    required this.items,
+    this.onChanged,
+    this.onTap,
+    this.leftPad = 20,
+    required this.selectedValue,
+  }) : super(key: key);
+
+  final String labelText;
+  final String hintText;
+  final Object? selectedValue;
+
+  final void Function(Object?)? onChanged;
+  final void Function()? onTap;
+  final double? leftPad;
+
+  final List<DropdownMenuItem<Object>>? items;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsetsDirectional.fromSTEB(20, 0, leftPad!, 16),
+      child: DropdownButtonFormField(
+        isExpanded: false,
+        value: selectedValue,
+        onChanged: onChanged,
+        onTap: onTap,
+        decoration: InputDecoration(
+          constraints: BoxConstraints.expand(height: 65),
+          labelText: labelText,
+          labelStyle: TextStyle(
+            fontFamily: 'Lexend Deca',
+            color: Color(0xFFEF4C43),
+            fontSize: 14,
+            fontWeight: FontWeight.normal,
+          ),
+          hintText: hintText,
+          hintStyle: TextStyle(
+            fontFamily: 'Lexend Deca',
+            color: Color(0xFF95A1AC),
+            fontSize: 14,
+            fontWeight: FontWeight.normal,
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: Color(0xFFDBE2E7),
+              width: 2,
+            ),
+            borderRadius: BorderRadius.circular(8),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: Color(0xFFDBE2E7),
+              width: 2,
+            ),
+            borderRadius: BorderRadius.circular(8),
+          ),
+          filled: true,
+          fillColor: Colors.white,
+          contentPadding: EdgeInsetsDirectional.fromSTEB(20, 24, 0, 24),
+        ),
+        style: TextStyle(
+          fontFamily: 'Lexend Deca',
+          color: Colors.black,
+          fontSize: 14,
+          fontWeight: FontWeight.normal,
+        ),
+        items: items,
+      ),
+    );
+  }
+}
+
 class RadioButton extends StatefulWidget {
   RadioButton({required this.function});
   final VoidCallback function;

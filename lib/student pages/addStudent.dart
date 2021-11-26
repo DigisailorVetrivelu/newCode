@@ -30,15 +30,25 @@ class _AddStudentOrStaffState extends State<AddStudentOrStaff> {
 
   bool isStaff = false;
   bool isLocal = false;
-  var slectedItem = "Computer Science";
+  var selectedItem = "Computer Science";
+  int selectedValue = 1;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
-  List<DropdownMenuItem<dynamic>> getItems() {
-    List<DropdownMenuItem<dynamic>> returns = [
+  List<DropdownMenuItem<String>> getItems() {
+    List<DropdownMenuItem<String>> returns = [
       DropdownMenuItem(value: "Computer Science", child: Text("Computer Science")),
       DropdownMenuItem(value: "Mechanical Engineering", child: Text("Mechanical Engineering")),
       DropdownMenuItem(value: "Civil Engineering", child: Text("Civil Engineering")),
       DropdownMenuItem(value: "Information Technology", child: Text("Information Technology")),
+    ];
+    return returns;
+  }
+
+  List<DropdownMenuItem<int>> getUserType() {
+    List<DropdownMenuItem<int>> returns = [
+      DropdownMenuItem(value: 1, child: Text("International Student")),
+      DropdownMenuItem(value: 2, child: Text("Local Student")),
+      DropdownMenuItem(value: 3, child: Text("Staff")),
     ];
 
     // returns = ['Computer Science', 'Mechanical Engineering', 'Civil Engineering', 'Information Technology']
@@ -96,83 +106,43 @@ class _AddStudentOrStaffState extends State<AddStudentOrStaff> {
                 ),
               ),
             ),
-            Row(
-              children: [
-                Expanded(
-                  flex: 2,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(top: 16, left: 22),
-                        child: const Text("International Student", style: TextStyle(fontWeight: FontWeight.bold)),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 22, top: 4, bottom: 10),
-                        child: SizedBox(
-                          height: 40,
-                          child: Row(
-                            children: [
-                              Text("Yes"),
-                              Radio<bool>(
-                                value: true,
-                                groupValue: isLocal,
-                                onChanged: (bool? value) {
-                                  setState(() {
-                                    isLocal = value!;
-                                  });
-                                },
-                              ),
-                              Text("No"),
-                              Radio<bool>(
-                                value: false,
-                                groupValue: isLocal,
-                                onChanged: (bool? value) {
-                                  setState(() {
-                                    isLocal = value!;
-                                  });
-                                },
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Expanded(
-                  flex: 3,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(top: 16, left: 22),
-                        child: const Text("Departmnet", style: TextStyle(fontWeight: FontWeight.bold)),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 18, top: 4, bottom: 10),
-                        child: DropdownButtonHideUnderline(
-                          child: GFDropdown(
-                              items: getItems(),
-                              value: slectedItem,
-                              onChanged: (dynamic value) {
-                                setState(() {
-                                  print(slectedItem);
-                                  slectedItem = value;
-                                });
-                              }),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-            // GFDropdown<dynamic>(items: getItems(), onChanged: (widget) {}),
             Divider(),
+
+            // GFDropdown<dynamic>(items: getItems(), onChanged: (widget) {}),
+
             CustomTextBox(controller: idController, labelText: "ID", hintText: "Enter ID", keyboardType: TextInputType.text),
             CustomTextBox(controller: nameController, hintText: 'Enter your Name', labelText: 'Name', keyboardType: TextInputType.name),
             CustomTextBox(controller: emailController, hintText: 'Enter your email', labelText: 'Email', keyboardType: TextInputType.emailAddress),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 2),
+              child: SizedBox(
+                child: Row(
+                  children: [
+                    Expanded(
+                        child: CustomDropDown(
+                            leftPad: 0,
+                            labelText: "User Type",
+                            hintText: "International Student",
+                            items: getUserType(),
+                            selectedValue: selectedValue,
+                            onChanged: (value) {
+                              selectedValue = int.parse(value.toString());
+                            }),
+                        flex: 85),
+                    Expanded(
+                        child: CustomDropDown(
+                            labelText: "Department",
+                            hintText: "selectedItem",
+                            items: getItems(),
+                            selectedValue: selectedItem,
+                            onChanged: (value) {
+                              selectedItem = value.toString();
+                            }),
+                        flex: 100),
+                  ],
+                ),
+              ),
+            ),
             isLocal
                 ? CustomTextBox(controller: icNumberController, labelText: "IC Number", hintText: "Enter IC", keyboardType: TextInputType.text)
                 : CustomTextBox(
@@ -248,8 +218,9 @@ class _AddStudentOrStaffState extends State<AddStudentOrStaff> {
                           countryCode: zipController.text,
                           phoneNumber: phoneNumberController.text.toString(),
                           icNumber: icNumberController.text.toString(),
-                          department: slectedItem,
-                          passportNumber: passportController.text);
+                          department: selectedItem,
+                          passportNumber: passportController.text,
+                          userType: UserT);
 
                       showDialog(
                         context: context,
